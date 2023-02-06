@@ -56,10 +56,12 @@ public class ProductController {
 
     @PostMapping("/product")
     public Product saveItem(@RequestBody Product product) throws SQLException {
-        Integer generatedId = productService.saveNewItem(product);
-        product.setId(generatedId);
+        //Integer generatedId = productService.saveNewItem(product);
+        //product.setId(generatedId);
 
-        return product;
+        //return product;
+
+        return productService.saveNewItem(product);
     }
 
     @PutMapping("/product/{id}/{price}")

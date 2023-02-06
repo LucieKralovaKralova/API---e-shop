@@ -88,15 +88,19 @@ public class ProductService {
         return null;
     }
 
-    public Integer saveNewItem(Product product) throws SQLException {
+    public Product saveNewItem(Product product) throws SQLException {
         Statement statement = connection.createStatement();
 
-        statement.executeUpdate(
+        String sqlString =
                 "INSERT INTO product (partNo, name, description, isForSale, price) VALUES" +
-                        " ('" + product.getPartNo() +"', '" + product.getName() +"', '" + product.getDescription() + "', " + product.getIsForSale() + ", " + product.getPrice() +" )",
-                Statement.RETURN_GENERATED_KEYS);
+                        " ('" + product.getPartNo() +"', '" + product.getName() +"', '" + product.getDescription() + "', " + product.getIsForSale() + ", " + product.getPrice() +" )";
+        statement.executeUpdate(sqlString, Statement.RETURN_GENERATED_KEYS);
 
-        return statement.getGeneratedKeys().getInt("id");
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        generatedKeys.next();
+        product.setId(generatedKeys.getInt(1));
+
+        return product;
     }
 
 
