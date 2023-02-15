@@ -7,13 +7,10 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Collection;
- //@CrossOrigin
-// @CrossOrigin(origins = "http://example.com")
-// http://localhost:3000
-// https://www.test-cors.org/
- // nginx nebo apache - reverzni proxy
+
 
 @CrossOrigin
+
 @RestController
 public class ProductController {
 
@@ -27,6 +24,11 @@ public class ProductController {
     public ErrorResponse handleError(Exception e){
         return new ErrorResponse(e.getMessage(), LocalDateTime.now());
 //
+    }
+    @ExceptionHandler(NotFoundException.class)
+    public ErrorResponse handleNotFoundException(NotFoundException e) {
+       // super (message);
+        return new ErrorResponse(e.getMessage(), LocalDateTime.now());
     }
 
     @GetMapping("/error")
@@ -56,10 +58,6 @@ public class ProductController {
 
     @PostMapping("/product")
     public Product saveItem(@RequestBody Product product) throws SQLException {
-        //Integer generatedId = productService.saveNewItem(product);
-        //product.setId(generatedId);
-
-        //return product;
 
         return productService.saveNewItem(product);
     }
