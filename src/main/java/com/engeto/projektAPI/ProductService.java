@@ -109,12 +109,29 @@ public class ProductService {
 
         statement.executeUpdate("UPDATE product " +
                 "SET price = '" + newPrice +"'  WHERE id = " + id);
+
+    }
+
+    public Product updateItem(Product product) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        statement.executeUpdate("UPDATE product " +
+                "SET partNo = '" + product.getPartNo() + "', name = '" + product.getName() +"', description = '" + product.getDescription() +"', isForSale = "+ product.getIsForSale() +", price = " + product.getPrice() +"  WHERE id = " +product.getId());
+
+        return product;
     }
 
     public void deleteNotForSaleItem() throws SQLException {
         Statement statement = connection.createStatement();
 
         statement.executeUpdate("DELETE FROM product WHERE isForSale = false");
+    }
+
+    public void deleteItem(int id) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        statement.executeUpdate("DELETE FROM product WHERE isForSale = false AND id ="+id);
+
     }
 
 
