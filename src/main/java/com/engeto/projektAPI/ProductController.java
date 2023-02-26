@@ -72,6 +72,11 @@ public class ProductController {
         productService.updateItem(product);
     }
 
+    @PutMapping("/product/{id}")
+    public void updateProductById( @RequestBody Product product) throws SQLException{
+        productService.updateItem(product);
+    }
+
     @DeleteMapping("/product")
     public void deleteOutOfSaleItem () throws SQLException {
         productService.deleteNotForSaleItem();

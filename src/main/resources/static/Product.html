@@ -36,48 +36,76 @@
         if (loadForSale.checked === false) {
 
             fetch("http://localhost:8080/products", requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    console.log(result);
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
 
-                    document.querySelector("#workField").innerHTML = '';
+                document.querySelector("#workField").innerHTML = '';
 
-                    result.forEach((item) => {
+                result.forEach((item) => {
 
-                        const lineDiv = document.createElement('div');
-                        lineDiv.id = "line-div" + item.id;
+                    const lineDiv = document.createElement('div');
+                    lineDiv.id = "line-div" + item.id;
 
-                        const idTextarea = document.createElement('textarea');
-                        idTextarea.setAttribute("disabled", "true");
-                        idTextarea.value = item.id;
+                    const messageBoxForItem = document.createElement('div');
+                    messageBoxForItem.id = "messageBoxForItem" + item.id;
+                    lineDiv.appendChild(messageBoxForItem);
 
-                        const partNoTextarea = document.createElement('textarea');
-                        partNoTextarea.value = item.partNo;
+                    const idTextarea = document.createElement('textarea');
+                    idTextarea.setAttribute("disabled", "true");
+                    idTextarea.value = item.id;
+                    idTextarea.id = "itemId" + item.id;
+                    idTextarea.style.marginRight = "5px";
 
-                        const nameTextarea = document.createElement('textarea');
-                        nameTextarea.value = item.name;
+                    const partNoTextarea = document.createElement('textarea');
+                    partNoTextarea.value = item.partNo;
+                    partNoTextarea.id = "itemPartNo" + item.id;
+                    partNoTextarea.style.marginRight = "5px";
 
-                        const descriptionTextarea = document.createElement('textarea');
-                        descriptionTextarea.value = item.description;
+                    const nameTextarea = document.createElement('textarea');
+                    nameTextarea.value = item.name;
+                    nameTextarea.id = "itemName" + item.id;
+                    nameTextarea.style.marginRight = "5px";
 
-                        const priceTextarea = document.createElement('textarea');
-                        priceTextarea.value = item.price;
+                    const descriptionTextarea = document.createElement('textarea');
+                    descriptionTextarea.value = item.description;
+                    descriptionTextarea.id = "itemDescription" + item.id;
+                    descriptionTextarea.style.marginRight = "5px";
 
-                        const forSaleCheckBox = document.createElement("input");
-                        forSaleCheckBox.setAttribute("type", "checkbox");
-                        forSaleCheckBox.checked = item.isForSale;
+                    const priceTextarea = document.createElement('textarea');
+                    priceTextarea.value = item.price;
+                    priceTextarea.id = "itemPrice" + item.id;
+                    priceTextarea.style.marginRight = "5px";
 
-                        lineDiv.appendChild(idTextarea);
-                        lineDiv.appendChild(partNoTextarea);
-                        lineDiv.appendChild(nameTextarea);
-                        lineDiv.appendChild(descriptionTextarea);
-                        lineDiv.appendChild(priceTextarea);
-                        lineDiv.appendChild(forSaleCheckBox);
+                    const forSaleCheckBox = document.createElement("input");
+                    forSaleCheckBox.setAttribute("type", "checkbox");
+                    forSaleCheckBox.id = "forSale" + item.id;
+                    forSaleCheckBox.checked = item.isForSale;
 
-                        document.getElementById("workField").appendChild(lineDiv);
-                    })
+                    lineDiv.appendChild(idTextarea);
+                    lineDiv.appendChild(partNoTextarea);
+                    lineDiv.appendChild(nameTextarea);
+                    lineDiv.appendChild(descriptionTextarea);
+                    lineDiv.appendChild(priceTextarea);
+                    lineDiv.appendChild(forSaleCheckBox);
+
+                    document.getElementById("workField").appendChild(lineDiv);
+
+                    let updateButton = document.createElement("button");
+                    updateButton.innerText = "Upravit produkt";
+                    updateButton.setAttribute('onclick', 'javascript : updateItem(' + item?.id + ');');
+                    updateButton.style.marginLeft = "80px";
+                    lineDiv.appendChild(updateButton);
+
+                    let deleteButton = document.createElement("button");
+                    deleteButton.innerText = "Smazat produkt";
+                    deleteButton.setAttribute('onclick', 'javascript : deleteItem(' + item?.id + ');');
+                    deleteButton.style.marginLeft = "10px";
+                    lineDiv.appendChild(deleteButton);
+
                 })
-                .catch(error => console.log('error', error));
+            })
+            .catch(error => console.log('error', error));
         } else {
             loadOnlyForSaleProducts();
         }
@@ -103,24 +131,39 @@
                     const lineDiv = document.createElement('div');
                     lineDiv.id = "line-div"+item.id;
 
+                    const messageBoxForItem = document.createElement('div');
+                    messageBoxForItem.id = "messageBoxForItem" + item.id;
+                    lineDiv.appendChild(messageBoxForItem);
+
                     const idTextarea = document.createElement('textarea');
                     idTextarea.setAttribute("disabled", "true");
                     idTextarea.value = item.id;
+                    idTextarea.id = "itemId" + item.id;
+                    idTextarea.style.marginRight = "5px";
 
                     const partNoTextarea = document.createElement('textarea');
                     partNoTextarea.value = item.partNo;
+                    partNoTextarea.id = "itemPartNo" + item.id;
+                    partNoTextarea.style.marginRight = "5px";
 
                     const nameTextarea = document.createElement('textarea');
                     nameTextarea.value = item.name;
+                    nameTextarea.id = "itemName" + item.id;
+                    nameTextarea.style.marginRight = "5px";
 
                     const descriptionTextarea = document.createElement('textarea');
                     descriptionTextarea.value = item.description;
+                    descriptionTextarea.id = "itemDescription" + item.id;
+                    descriptionTextarea.style.marginRight = "5px";
 
                     const priceTextarea = document.createElement('textarea');
                     priceTextarea.value = item.price;
+                    priceTextarea.id = "itemPrice" + item.id;
+                    priceTextarea.style.marginRight = "5px";
 
                     const forSaleCheckBox = document.createElement("input");
                     forSaleCheckBox.setAttribute("type", "checkbox");
+                    forSaleCheckBox.id = "forSale" + item.id;
                     forSaleCheckBox.checked = item.isForSale;
 
                     lineDiv.appendChild(idTextarea);
@@ -131,6 +174,18 @@
                     lineDiv.appendChild(forSaleCheckBox);
 
                     document.getElementById("workField").appendChild(lineDiv);
+
+                    let updateButton = document.createElement("button");
+                    updateButton.innerText = "Upravit produkt";
+                    updateButton.setAttribute('onclick', 'javascript : updateItem(' + item?.id + ');');
+                    updateButton.style.marginLeft = "80px";
+                    lineDiv.appendChild(updateButton);
+
+                    let deleteButton = document.createElement("button");
+                    deleteButton.innerText = "Smazat produkt";
+                    deleteButton.setAttribute('onclick', 'javascript : deleteItem(' + item?.id + ');');
+                    deleteButton.style.marginLeft = "10px";
+                    lineDiv.appendChild(deleteButton);
 
                 })
             })
@@ -146,13 +201,12 @@
             redirect: 'follow'
         };
 
-        var id = document.getElementById("id").value;
+        const id = document.getElementById("id").value;
 
         fetch("http://localhost:8080/product/"+ id, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
-
 
                     document.getElementById("productId").value = result.id;
                     document.getElementById("productPartNo").value = result.partNo;
@@ -160,8 +214,6 @@
                     document.getElementById("productDescription").value = result.description;
                     document.getElementById("productPrice").value = result.price;
                     document.getElementById("productForSale").checked = result.isForSale;
-
-
 
             })
             .catch(error => console.log('error', error));
@@ -176,13 +228,12 @@
             redirect: 'follow'
         };
 
-        var partNo = document.getElementById("partNo").value;
+        const partNo = document.getElementById("partNo").value;
 
         fetch("http://localhost:8080/productPart/"+ partNo, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
-
 
                 document.getElementById("productId").value = result.id;
                 document.getElementById("productPartNo").value = result.partNo;
@@ -190,8 +241,6 @@
                 document.getElementById("productDescription").value = result.description;
                 document.getElementById("productPrice").value = result.price;
                 document.getElementById("productForSale").checked = result.isForSale;
-
-
 
             })
             .catch(error => console.log('error', error));
@@ -273,6 +322,174 @@
 
     }
 
+    function updateProduct () {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var idSave = document.getElementById("id").value;
+
+        var raw = JSON.stringify({
+            "id": idSave,
+            "partNo": document.getElementById("productPartNo").value,
+            "name": document.getElementById("productName").value,
+            "description": document.getElementById("productDescription").value,
+            "price": document.getElementById("productPrice").value,
+            "isForSale": document.getElementById("productForSale").checked
+        });
+
+        var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        document.getElementById('productPartNo').classList.remove('validation-error');
+        document.getElementById('productName').classList.remove('validation-error');
+        document.getElementById('productPrice').classList.remove('validation-error');
+
+        if (document.getElementById("productPartNo").value === ''){
+            console.log('Validation error');
+            document.getElementById('messageBox').classList.add('failure');
+            document.getElementById('messageBox').innerText = "Vyplňte prosím číslo produktu PN";
+            document.getElementById('productPartNo').classList.add('validation-error');
+
+            return;
+        }
+        if (document.getElementById("productName").value === ''){
+            console.log('Validation error');
+            document.getElementById('messageBox').classList.add('failure');
+            document.getElementById('messageBox').innerText = "Vyplňte prosím název produktu";
+            document.getElementById('productName').classList.add('validation-error');
+
+            return;
+        }
+        if (document.getElementById("productPrice").value === ''){
+            console.log('Validation error');
+            document.getElementById('messageBox').classList.add('failure');
+            document.getElementById('messageBox').innerText = "Vyplňte prosím cenu produktu";
+            document.getElementById('productPrice').classList.add('validation-error');
+
+            return;
+        }
+        var S = document.getElementById("productPartNo").value;
+        if ((parseInt(S) === NaN) || (parseInt(S)+'' != S)){
+            console.log('Validation error');
+            document.getElementById('messageBox').classList.add('failure');
+            document.getElementById('messageBox').innerText = "Špatně zadané číslo";
+            document.getElementById('productPartNo').classList.add('validation-error');
+
+            return;
+        }
+
+        document.getElementById('messageBox').innerText = "UKLÁDÁNÍ";
+        document.getElementById('messageBox').classList.remove('failure');
+        document.getElementById('messageBox').classList.remove('success');
+
+        fetch("http://localhost:8080/product", requestOptions)
+            .then(response => response.text())
+            .then(result => {console.log(result);
+                document.getElementById('messageBox').classList.add('success');
+                document.getElementById('messageBox').innerText = "UPRAVENO";
+            })
+            .catch (error => console.log('error', error));
+    }
+
+
+    function updateItem(idItem){
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var idSave = document.getElementById("itemId"+ idItem).value;
+
+        var raw = JSON.stringify({
+            "id": idSave,
+            "partNo": document.getElementById("itemPartNo"+ idItem).value,
+            "name": document.getElementById("itemName"+ idItem).value,
+            "description": document.getElementById("itemDescription"+ idItem).value,
+            "price": document.getElementById("itemPrice"+ idItem).value,
+            "isForSale": document.getElementById("forSale"+ idItem).checked
+        });
+
+        var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        document.getElementById('itemPartNo'+ idItem).classList.remove('validation-error');
+        document.getElementById('itemName'+ idItem).classList.remove('validation-error');
+        document.getElementById('itemPrice'+ idItem).classList.remove('validation-error');
+
+        if (document.getElementById("itemPartNo"+ idItem).value === ''){
+            console.log('Validation error');
+            document.getElementById('messageBoxForItem'+ idItem).classList.add('failure');
+            document.getElementById('messageBoxForItem'+ idItem).innerText = "Vyplňte prosím číslo produktu PN";
+            document.getElementById('itemPartNo'+ idItem).classList.add('validation-error');
+
+            return;
+        }
+        if (document.getElementById("itemName"+ idItem).value === ''){
+            console.log('Validation error');
+            document.getElementById('messageBoxForItem'+ idItem).classList.add('failure');
+            document.getElementById('messageBoxForItem'+ idItem).innerText = "Vyplňte prosím název produktu";
+            document.getElementById('itemName'+ idItem).classList.add('validation-error');
+
+            return;
+        }
+        if (document.getElementById("itemPrice"+ idItem).value === ''){
+            console.log('Validation error');
+            document.getElementById('messageBoxForItem'+ idItem).classList.add('failure');
+            document.getElementById('messageBoxForItem'+ idItem).innerText = "Vyplňte prosím cenu produktu";
+            document.getElementById('itemPrice'+ idItem).classList.add('validation-error');
+
+            return;
+        }
+        var S = document.getElementById("itemPartNo"+ idItem).value;
+        if ((parseInt(S) === NaN) || (parseInt(S)+'' != S)){
+            console.log('Validation error');
+            document.getElementById('messageBoxForItem'+ idItem).classList.add('failure');
+            document.getElementById('messageBoxForItem'+ idItem).innerText = "Špatně zadané číslo";
+            document.getElementById('itemPartNo'+ idItem).classList.add('validation-error');
+
+            return;
+        }
+
+        document.getElementById('messageBoxForItem'+ idItem).innerText = "UKLÁDÁNÍ";
+        document.getElementById('messageBoxForItem'+ idItem).classList.remove('failure');
+        document.getElementById('messageBoxForItem'+ idItem).classList.remove('success');
+
+        fetch("http://localhost:8080/product/"+ idItem, requestOptions)
+            .then(response => response.text())
+            .then(result => {console.log(result);
+                document.getElementById('messageBoxForItem'+ idItem).classList.add('success');
+                document.getElementById('messageBoxForItem'+ idItem).innerText = "UPRAVENO";
+            })
+            .catch (error => console.log('error', error));
+    }
+
+    function deleteItem(id) {
+        var requestOptions = {
+            method: 'DELETE',
+            redirect: 'follow'
+        };
+
+        let forSaleCheckBox = document.getElementById("forSale"+ id);
+
+        fetch("http://localhost:8080/product/"+ id, requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                if (forSaleCheckBox.checked === true){
+                    console.log('Validation error');
+                    alert("Produkt, který je na skladě NELZE smazat!")
+                }else {
+                console.log(result);
+                alert("Položka byla vymazána");
+                loadProducts();
+                }})
+            .catch(error => console.log('error', error));
+    }
 
     function deleteNotForSale() {
         var requestOptions = {
@@ -280,17 +497,17 @@
             redirect: 'follow'
         };
 
-            console.log("Bylo kliknuto na Vymazat všechny produkty, co nejsou k prodeji")
+        console.log("Bylo kliknuto na Vymazat všechny produkty, co nejsou k prodeji")
 
-            if (confirm("Opravdu chcete nenávratně odstranit všechny produkty, které nejsou na prodej?")== true) {
-                fetch("http://localhost:8080/product", requestOptions)
-                    .then(response => response.text())
-                    .then(result => {console.log(result);})
-                    .catch(error => console.log('error', error));
-                alert("Položky byly vymazány")
-            } else {
-                console.log ("Položky nebyly vymazány")
-            }
+        if (confirm("Opravdu chcete nenávratně odstranit všechny produkty, které nejsou na prodej?")== true) {
+            fetch("http://localhost:8080/product", requestOptions)
+                .then(response => response.text())
+                .then(result => {console.log(result);})
+                .catch(error => console.log('error', error));
+            alert("Položky byly vymazány")
+        } else {
+            console.log ("Položky nebyly vymazány")
+        }
 
     }
 
@@ -310,15 +527,13 @@
     <br>
     <br>
     <br>
-    <button id="load-by-id-button" onclick="loadById()">NAJÍT PRODUKT PODLE ID: </button>
+    <button id="load-by-id-button" onclick="loadById()">NAČÍST PRODUKT PODLE ID: </button>
     <textarea id="id" cols="10" rows="1"></textarea>
     <br>
-    <button id="load-by-partNo-button" onclick="loadByPartNo()">NAJÍT PRODUKT PODLE ČÍSLA PRODUKTU PN:  </button>
+    <button id="load-by-partNo-button" onclick="loadByPartNo()">NAČÍST PRODUKT PODLE ČÍSLA PRODUKTU PN:  </button>
     <textarea id="partNo" cols="10" rows="1"></textarea>
-    <br>
 
 </div>
-<br>
 <br>
 <div id="messageBox"></div>
 <div>
@@ -337,13 +552,18 @@
     <textarea id="productDescription"></textarea>
     <textarea id="productPrice"></textarea>
     <input id="productForSale" type="checkbox">
-    <button id="add-button" style="margin-left: 80px" onclick="addProduct()">PŘIDAT PRODUKT</button>
+    <button id="update-button" style="margin-left: 80px" onclick="updateProduct()">UPRAVIT PRODUKT</button>
+    <button id="add-button" style="margin-left: 10px" onclick="addProduct()">PŘIDAT PRODUKT</button>
 </div>
+<br>
 <div id="workField">
 </div>
 <br>
 <br>
 <br>
 <button id="delete-not-for-sale-button" onclick="deleteNotForSale()">VYMAZAT VŠECHNY PRODUKTY, KTERÉ JIŽ NEJSOU K PRODEJI  </button>
+<br>
+<br>
+<br>
 </body>
 </html>
