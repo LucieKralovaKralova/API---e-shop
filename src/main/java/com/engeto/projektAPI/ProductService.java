@@ -62,7 +62,13 @@ public class ProductService {
                 resultSet.getBoolean("isForSale"),
                 resultSet.getBigDecimal("price"));
     }
-
+    // Metoda pro zachycení případného zadání prázdného pole pro název produktu
+    public boolean validationName (String newName) {
+        if (newName == "") {
+            return false;
+        }
+        return true;
+    }
 
     public Product getItemById(int itemId) throws SQLException {
         Statement statement = connection.createStatement();

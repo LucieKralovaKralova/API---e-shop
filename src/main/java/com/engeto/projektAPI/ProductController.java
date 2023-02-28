@@ -57,24 +57,36 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    public Product saveItem(@RequestBody Product product) throws SQLException {
-
-        return productService.saveNewItem(product);
+    public Product saveItem(@RequestBody Product product) throws SQLException, NotFoundException {
+        if (productService.validationName(product.getName())) {
+            productService.saveNewItem(product);
+        } else {
+            throw new NotFoundException("Zadejte prosím název produktu! ");
+        }
+        return product;
     }
 
-    @PutMapping("/product/{id}/{price}")
-    public void updatePriceById(@PathVariable("id") int id, @PathVariable("price")BigDecimal newPrice) throws SQLException{
+    @PutMapping("/productPrice/{id}")
+    public void updatePriceById(@PathVariable("id") int id, @RequestParam("price") BigDecimal newPrice) throws SQLException{
         productService.updatePriceItem(id, newPrice);
     }
 
     @PutMapping("/product")
-    public void updateProduct( @RequestBody Product product) throws SQLException{
-        productService.updateItem(product);
+    public void updateProduct(@RequestBody Product product) throws SQLException, NotFoundException {
+        if (productService.validationName(product.getName())) {
+            productService.updateItem(product);
+        } else {
+            throw new NotFoundException("Zadejte prosím název produktu! ");
+        }
     }
 
     @PutMapping("/product/{id}")
-    public void updateProductById( @RequestBody Product product) throws SQLException{
-        productService.updateItem(product);
+    public void updateProductById(@RequestBody Product product) throws SQLException, NotFoundException {
+        if (productService.validationName(product.getName())) {
+            productService.updateItem(product);
+        } else {
+            throw new NotFoundException("Zadejte prosím název produktu! ");
+        }
     }
 
     @DeleteMapping("/product")
