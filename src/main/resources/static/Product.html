@@ -120,7 +120,7 @@
             redirect: 'follow'
         };
 
-        fetch("http://localhost:8080/productsForSale", requestOptions)
+        fetch("http://localhost:8080/products-for-sale", requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
@@ -204,7 +204,7 @@
 
         const id = document.getElementById("id").value;
 
-        fetch("http://localhost:8080/product/"+ id, requestOptions)
+        fetch("http://localhost:8080/products/"+ id, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
@@ -231,7 +231,7 @@
 
         const partNo = document.getElementById("partNo").value;
 
-        fetch("http://localhost:8080/productPart/"+ partNo, requestOptions)
+        fetch("http://localhost:8080/products-part/"+ partNo, requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
@@ -310,7 +310,7 @@
         document.getElementById('messageBox').classList.remove('success');
 
 
-        fetch("http://localhost:8080/product", requestOptions)
+        fetch("http://localhost:8080/products", requestOptions)
             .then(response => response.text())
             .then(result => {
                 console.log(result);
@@ -387,7 +387,7 @@
         document.getElementById('messageBox').classList.remove('failure');
         document.getElementById('messageBox').classList.remove('success');
 
-        fetch("http://localhost:8080/product", requestOptions)
+        fetch("http://localhost:8080/products", requestOptions)
             .then(response => response.text())
             .then(result => {console.log(result);
                 document.getElementById('messageBox').classList.add('success');
@@ -461,7 +461,7 @@
         document.getElementById('messageBoxForItem'+ idItem).classList.remove('failure');
         document.getElementById('messageBoxForItem'+ idItem).classList.remove('success');
 
-        fetch("http://localhost:8080/product/"+ idItem, requestOptions)
+        fetch("http://localhost:8080/products/"+ idItem, requestOptions)
             .then(response => response.text())
             .then(result => {console.log(result);
                 document.getElementById('messageBoxForItem'+ idItem).classList.add('success');
@@ -478,7 +478,7 @@
 
         let forSaleCheckBox = document.getElementById("forSale"+ id);
 
-        fetch("http://localhost:8080/product/"+ id, requestOptions)
+        fetch("http://localhost:8080/products/"+ id, requestOptions)
             .then(response => response.text())
             .then(result => {
                 if (forSaleCheckBox.checked === true){
@@ -501,7 +501,7 @@
         console.log("Bylo kliknuto na Vymazat všechny produkty, co nejsou k prodeji")
 
         if (confirm("Opravdu chcete nenávratně odstranit všechny produkty, které nejsou na prodej?")== true) {
-            fetch("http://localhost:8080/product", requestOptions)
+            fetch("http://localhost:8080/products", requestOptions)
                 .then(response => response.text())
                 .then(result => {console.log(result);})
                 .catch(error => console.log('error', error));

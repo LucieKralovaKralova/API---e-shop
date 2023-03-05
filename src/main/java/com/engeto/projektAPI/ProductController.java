@@ -41,22 +41,22 @@ public class ProductController {
         return productService.getAllItems();
     }
 
-    @GetMapping("/productsForSale")
+    @GetMapping("/products-for-sale")
     public Collection<Product> loadAllAvailableItems() throws SQLException {
         return productService.getAllAvailableItems();
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/products/{id}")
     public Product loadProductById(@PathVariable("id") int id) throws SQLException {
         return productService.getItemById(id);
     }
 
-    @GetMapping("/productPart/{partNo}")
+    @GetMapping("/products-part/{partNo}")
     public Product loadProductByPartNo(@PathVariable("partNo") Long partNo) throws SQLException {
         return productService.getItemByPartNo(partNo);
     }
 
-    @PostMapping("/product")
+    @PostMapping("/products")
     public Product saveItem(@RequestBody Product product) throws SQLException, NotFoundException {
         if (productService.validationName(product.getName())) {
             productService.saveNewItem(product);
@@ -66,12 +66,12 @@ public class ProductController {
         return product;
     }
 
-    @PutMapping("/productPrice/{id}")
+    @PutMapping("/products-price/{id}")
     public void updatePriceById(@PathVariable("id") int id, @RequestParam("price") BigDecimal newPrice) throws SQLException{
         productService.updatePriceItem(id, newPrice);
     }
 
-    @PutMapping("/product")
+    @PutMapping("/products")
     public void updateProduct(@RequestBody Product product) throws SQLException, NotFoundException {
         if (productService.validationName(product.getName())) {
             productService.updateItem(product);
@@ -80,7 +80,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/product/{id}")
+    @PutMapping("/products/{id}")
     public void updateProductById(@RequestBody Product product) throws SQLException, NotFoundException {
         if (productService.validationName(product.getName())) {
             productService.updateItem(product);
@@ -89,12 +89,12 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/product")
+    @DeleteMapping("/products")
     public void deleteOutOfSaleItem () throws SQLException {
         productService.deleteNotForSaleItem();
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/products/{id}")
     public void deleteProduct (@PathVariable("id") int id) throws SQLException {
         productService.deleteItem(id);
     }

@@ -31,14 +31,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/productsForSale",
+					"raw": "http://localhost:8080/products-for-sale",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"productsForSale"
+						"products-for-sale"
 					]
 				}
 			},
@@ -50,15 +50,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/product/1",
+					"raw": "http://localhost:8080/products/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"product",
-						"1"
+						"products",
+						"2"
 					]
 				}
 			},
@@ -70,15 +70,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/productPart/111",
+					"raw": "http://localhost:8080/products-part/777",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"productPart",
-						"111"
+						"products-part",
+						"777"
 					]
 				}
 			},
@@ -91,7 +91,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": null,\r\n    \"partNo\": 2064,\r\n    \"name\": \"\",\r\n    \"description\": \"rifle\",\r\n    \"isForSale\": true,\r\n    \"price\": 400.00\r\n}",
+					"raw": "{\r\n    \"id\": null,\r\n    \"partNo\": 2065,\r\n    \"name\": \"kalhoty\",\r\n    \"description\": \"rifle\",\r\n    \"isForSale\": true,\r\n    \"price\": 400.00\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -99,14 +99,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/product",
+					"raw": "http://localhost:8080/products",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"product"
+						"products"
 					],
 					"query": [
 						{
@@ -154,14 +154,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/productPrice/1?price=100",
+					"raw": "http://localhost:8080/products-price/1?price=100",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"productPrice",
+						"products-price",
 						"1"
 					],
 					"query": [
@@ -181,7 +181,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 2,\r\n    \"partNo\": 222,\r\n    \"name\": \"\",\r\n    \"description\": \"zelené\",\r\n    \"isForSale\": true,\r\n    \"price\": 300.00\r\n}",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"partNo\": 222,\r\n    \"name\": \"\",\r\n    \"description\": \"modré\",\r\n    \"isForSale\": true,\r\n    \"price\": 300.00\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -189,14 +189,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/product",
+					"raw": "http://localhost:8080/products",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"product"
+						"products"
 					]
 				}
 			},
@@ -209,7 +209,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"partNo\": 111,\r\n    \"name\": \"\",\r\n    \"description\": \"zelené\",\r\n    \"price\": 150.00,\r\n    \"forSale\": true\r\n}",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"partNo\": 111,\r\n    \"name\": \"tričko\",\r\n    \"description\": \"zelené\",\r\n    \"price\": 150.00,\r\n    \"forSale\": true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -217,14 +217,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/product/1",
+					"raw": "http://localhost:8080/products/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"product",
+						"products",
 						"1"
 					]
 				}
@@ -232,38 +232,39 @@
 			"response": []
 		},
 		{
-			"name": "Delete not for sale",
+			"name": "Delete all not for sale",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/product",
+					"raw": "http://localhost:8080/products",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"product"
+						"products"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Delete product",
+			"name": "Delete product by ID",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/product",
+					"raw": "http://localhost:8080/products/45",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"product"
+						"products",
+						"45"
 					]
 				}
 			},
