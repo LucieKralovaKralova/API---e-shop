@@ -127,6 +127,15 @@ public class ProductService {
         return product;
     }
 
+    public Product updateById(int itemId, Product product) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        statement.executeUpdate("UPDATE product " +
+                "SET partNo = '" + product.getPartNo() + "', name = '" + product.getName() +"', description = '" + product.getDescription() +"', isForSale = "+ product.getIsForSale() +", price = " + product.getPrice() +"  WHERE id = " + itemId);
+
+        return product;
+    }
+
     public void deleteNotForSaleItem() throws SQLException {
         Statement statement = connection.createStatement();
 

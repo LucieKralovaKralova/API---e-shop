@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 
 @CrossOrigin
@@ -15,6 +16,8 @@ import java.util.Collection;
 public class ProductController {
 
     ProductService productService;
+
+    private static final String ERROR_MESSAGE = "Zadejte prosím název produktu! ";
 
     public ProductController() throws SQLException {
         productService = new ProductService();
@@ -37,12 +40,12 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public Collection<Product> loadAllItems() throws SQLException {
+    public List<Product> loadAllItems() throws SQLException {
         return productService.getAllItems();
     }
 
     @GetMapping("/products-for-sale")
-    public Collection<Product> loadAllAvailableItems() throws SQLException {
+    public List<Product> loadAllAvailableItems() throws SQLException {
         return productService.getAllAvailableItems();
     }
 
@@ -61,7 +64,7 @@ public class ProductController {
         if (productService.validationName(product.getName())) {
             productService.saveNewItem(product);
         } else {
-            throw new NotFoundException("Zadejte prosím název produktu! ");
+            throw new NotFoundException(ERROR_MESSAGE);
         }
         return product;
     }
@@ -76,14 +79,14 @@ public class ProductController {
         if (productService.validationName(product.getName())) {
             productService.updateItem(product);
         } else {
-            throw new NotFoundException("Zadejte prosím název produktu! ");
+            throw new NotFoundException(ERROR_MESSAGE);
         }
     }
 
     @PutMapping("/products/{id}")
-    public void updateProductById(@RequestBody Product product) throws SQLException, NotFoundException {
+    public void updateProductById(@PathVariable("id") int id, @RequestBody Product product) throws SQLException, NotFoundException {
         if (productService.validationName(product.getName())) {
-            productService.updateItem(product);
+            productService.updateById(id, product);
         } else {
             throw new NotFoundException("Zadejte prosím název produktu! ");
         }
