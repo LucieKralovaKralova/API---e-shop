@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -17,7 +16,8 @@ public class ProductController {
 
     ProductService productService;
 
-    private static final String ERROR_MESSAGE = "Zadejte prosím název produktu! ";
+    private static final String ERROR_MESSAGE_NOT_NAME = "Zadejte prosím název produktu! ";
+    private static final String ERROR_MESSAGE_NOT_ITEM = "Produkt nebyl nalezen! ";
 
     public ProductController() throws SQLException {
         productService = new ProductService();
@@ -50,13 +50,23 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public Product loadProductById(@PathVariable("id") int id) throws SQLException {
-        return productService.getItemById(id);
+    public Product loadProductById(@PathVariable("id") int id) throws SQLException, NotFoundException, NullPointerException {
+        try {
+            return productService.getItemById(id);
+        } catch (NullPointerException e) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM + e.getMessage());
+        }
+
     }
 
     @GetMapping("/products-part/{partNo}")
-    public Product loadProductByPartNo(@PathVariable("partNo") Long partNo) throws SQLException {
-        return productService.getItemByPartNo(partNo);
+    public Product loadProductByPartNo(@PathVariable("partNo") Long partNo) throws SQLException, NotFoundException, NullPointerException {
+        try {
+            return productService.getItemByPartNo(partNo);
+        } catch (NullPointerException e) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM + e.getMessage());
+        }
+
     }
 
     @PostMapping("/products")
@@ -64,32 +74,47 @@ public class ProductController {
         if (productService.validationName(product.getName())) {
             productService.saveNewItem(product);
         } else {
-            throw new NotFoundException(ERROR_MESSAGE);
+            throw new NotFoundException(ERROR_MESSAGE_NOT_NAME);
         }
         return product;
     }
 
     @PutMapping("/products-price/{id}")
-    public void updatePriceById(@PathVariable("id") int id, @RequestParam("price") BigDecimal newPrice) throws SQLException{
-        productService.updatePriceItem(id, newPrice);
+    public void updatePriceById(@PathVariable("id") int id, @RequestParam("price") BigDecimal newPrice) throws SQLException, NotFoundException, NullPointerException {
+        try {
+            productService.updatePriceItem(id, newPrice);
+        } catch (NullPointerException e) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM + e.getMessage());
+        }
+
     }
 
     @PutMapping("/products")
-    public void updateProduct(@RequestBody Product product) throws SQLException, NotFoundException {
-        if (productService.validationName(product.getName())) {
-            productService.updateItem(product);
-        } else {
-            throw new NotFoundException(ERROR_MESSAGE);
+    public void updateProduct(@RequestBody Product product) throws SQLException, NotFoundException, NullPointerException {
+        try {
+            if (productService.validationName(product.getName())) {
+                productService.updateItem(product);
+            } else {
+                throw new NotFoundException(ERROR_MESSAGE_NOT_NAME);
+            }
+        } catch (NullPointerException e) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM + e.getMessage());
         }
+
     }
 
     @PutMapping("/products/{id}")
-    public void updateProductById(@PathVariable("id") int id, @RequestBody Product product) throws SQLException, NotFoundException {
-        if (productService.validationName(product.getName())) {
-            productService.updateById(id, product);
-        } else {
-            throw new NotFoundException("Zadejte prosím název produktu! ");
+    public void updateProductById(@PathVariable("id") int id, @RequestBody Product product) throws SQLException, NotFoundException, NullPointerException {
+        try {
+            if (productService.validationName(product.getName())) {
+                productService.updateById(id, product);
+            } else {
+                throw new NotFoundException(ERROR_MESSAGE_NOT_NAME);
+            }
+        } catch (NullPointerException e) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM + e.getMessage());
         }
+
     }
 
     @DeleteMapping("/products")
@@ -98,7 +123,12 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
-    public void deleteProduct (@PathVariable("id") int id) throws SQLException {
-        productService.deleteItem(id);
+    public void deleteProduct (@PathVariable("id") int id) throws SQLException, NotFoundException, NullPointerException {
+        try {
+            productService.deleteItem(id);
+        } catch (NullPointerException e) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM + e.getMessage());
+        }
+
     }
 }

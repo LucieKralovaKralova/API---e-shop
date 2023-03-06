@@ -71,27 +71,27 @@ public class ProductService {
     }
 
     public Product getItemById(int itemId) throws SQLException {
-        Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM product WHERE id = " + itemId);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM product WHERE id = " + itemId);
 
-        if (resultSet.next()) {
-            return extractItemData(resultSet);
-        }
+            if (resultSet.next()) {
+                return extractItemData(resultSet);
+            }
 
-        return null;
+            return null;
     }
 
     public Product getItemByPartNo(Long itemPartNo) throws SQLException {
-        Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM product WHERE partNo = " + itemPartNo);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM product WHERE partNo = " + itemPartNo);
 
-        if (resultSet.next()) {
-            return extractItemData(resultSet);
-        }
+            if (resultSet.next()) {
+                return extractItemData(resultSet);
+            }
 
-        return null;
+            return null;
     }
 
     public Product saveNewItem(Product product) throws SQLException {
@@ -111,29 +111,29 @@ public class ProductService {
 
 
     public void updatePriceItem(int id, BigDecimal newPrice) throws SQLException {
-        Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
-        statement.executeUpdate("UPDATE product " +
-                "SET price = '" + newPrice +"'  WHERE id = " + id);
+            statement.executeUpdate("UPDATE product " +
+                    "SET price = '" + newPrice +"'  WHERE id = " + id);
 
     }
 
     public Product updateItem(Product product) throws SQLException {
-        Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
-        statement.executeUpdate("UPDATE product " +
-                "SET partNo = '" + product.getPartNo() + "', name = '" + product.getName() +"', description = '" + product.getDescription() +"', isForSale = "+ product.getIsForSale() +", price = " + product.getPrice() +"  WHERE id = " +product.getId());
+            statement.executeUpdate("UPDATE product " +
+                    "SET partNo = '" + product.getPartNo() + "', name = '" + product.getName() +"', description = '" + product.getDescription() +"', isForSale = "+ product.getIsForSale() +", price = " + product.getPrice() +"  WHERE id = " +product.getId());
 
-        return product;
+            return product;
     }
 
     public Product updateById(int itemId, Product product) throws SQLException {
-        Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
-        statement.executeUpdate("UPDATE product " +
-                "SET partNo = '" + product.getPartNo() + "', name = '" + product.getName() +"', description = '" + product.getDescription() +"', isForSale = "+ product.getIsForSale() +", price = " + product.getPrice() +"  WHERE id = " + itemId);
+            statement.executeUpdate("UPDATE product " +
+                    "SET partNo = '" + product.getPartNo() + "', name = '" + product.getName() +"', description = '" + product.getDescription() +"', isForSale = "+ product.getIsForSale() +", price = " + product.getPrice() +"  WHERE id = " + itemId);
 
-        return product;
+            return product;
     }
 
     public void deleteNotForSaleItem() throws SQLException {
@@ -143,10 +143,9 @@ public class ProductService {
     }
 
     public void deleteItem(int id) throws SQLException {
-        Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
-        statement.executeUpdate("DELETE FROM product WHERE isForSale = false AND id ="+id);
-
+            statement.executeUpdate("DELETE FROM product WHERE isForSale = false AND id ="+id);
     }
 
 
