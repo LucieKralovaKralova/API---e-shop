@@ -19,7 +19,7 @@ public class ProductService {
 
     }
 
-
+    private static final String ERROR_MESSAGE_NOT_ITEM = "Produkt nebyl nalezen! ";
 
     public List<Product> getAllItems() throws SQLException {
         Statement statement = connection.createStatement();
@@ -110,42 +110,56 @@ public class ProductService {
     }
 
 
-    public void updatePriceItem(int id, BigDecimal newPrice) throws SQLException {
+    public void updatePriceItem(int id, BigDecimal newPrice) throws SQLException, NotFoundException {
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("UPDATE product " +
+            int rowCount = statement.executeUpdate("UPDATE product " +
                     "SET price = '" + newPrice +"'  WHERE id = " + id);
-
+            if (rowCount == 0) {
+                throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM);
+            }
     }
 
-    public Product updateItem(Product product) throws SQLException {
+    public Product updateItem(Product product) throws SQLException, NotFoundException {
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("UPDATE product " +
+            int rowCount = statement.executeUpdate("UPDATE product " +
                     "SET partNo = '" + product.getPartNo() + "', name = '" + product.getName() +"', description = '" + product.getDescription() +"', isForSale = "+ product.getIsForSale() +", price = " + product.getPrice() +"  WHERE id = " +product.getId());
-
+        if (rowCount == 0) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM);
+        }
             return product;
     }
 
-    public Product updateById(int itemId, Product product) throws SQLException {
+    public Product updateById(int itemId, Product product) throws SQLException, NotFoundException {
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("UPDATE product " +
+            int rowCount = statement.executeUpdate("UPDATE product " +
                     "SET partNo = '" + product.getPartNo() + "', name = '" + product.getName() +"', description = '" + product.getDescription() +"', isForSale = "+ product.getIsForSale() +", price = " + product.getPrice() +"  WHERE id = " + itemId);
-
+        if (rowCount == 0) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM);
+        }
             return product;
     }
 
-    public void deleteNotForSaleItem() throws SQLException {
+    public void deleteNotForSaleItem() throws SQLException, NotFoundException {
         Statement statement = connection.createStatement();
 
-        statement.executeUpdate("DELETE FROM product WHERE isForSale = false");
+        int rowCount = statement.executeUpdate("DELETE FROM product WHERE isForSale = false");
+
+        if (rowCount == 0) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM);
+        }
     }
 
-    public void deleteItem(int id) throws SQLException {
+    public void deleteItem(int id) throws SQLException, NotFoundException {
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("DELETE FROM product WHERE isForSale = false AND id ="+id);
+            int rowCount = statement.executeUpdate("DELETE FROM product WHERE isForSale = false AND id ="+id);
+
+        if (rowCount == 0) {
+            throw new NotFoundException(ERROR_MESSAGE_NOT_ITEM);
+        }
     }
 
 
